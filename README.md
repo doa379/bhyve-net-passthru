@@ -59,14 +59,14 @@ In order to configure networking we will set the following entries in `/etc/rc.c
 #wlans_iwm0="wlan0"
 #ifconfig_wlan0="WPA DHCP"
 #create_args_wlan0="country GB"
-#netwait_enable="YES"           # Enable rc.d/netwait (or NO)
-#netwait_if="wlan0"             # Wait for active link on each intf in this list.
-#netwait_if_timeout="60"        # Total number of seconds to monitor link state.
+#netwait_enable="YES"           #Enable rc.d/netwait (or NO)
+#netwait_if="wlan0"             #Wait for active link on each intf in this list.
+#netwait_if_timeout="60"        #Total number of seconds to monitor link state.
 firewall_enable="NO"
 firewall_type="simple"
 
-#vm_enable="NO"                 # Setting for vm-bhyve management system
-#vm_dir="/mnt/vm_bhyve"         # Setting for vm-bhyve management system
+#vm_enable="NO"                 #Setting for vm-bhyve management system
+#vm_dir="/mnt/vm_bhyve"         #Setting for vm-bhyve management system
 cloned_interfaces="bridge0 tap0"
 ifconfig_bridge0="inet 172.24.1.49 netmask 255.255.255.0 addm tap0 up"
 defaultrouter="172.24.1.1"
