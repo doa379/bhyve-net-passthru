@@ -8,7 +8,7 @@ The prescription for this setup is as follows:
 2. Disable WIFI adapter under host
 3. Give the client full access to WIFI adapter
 4. Create a bridge and tap device under host
-5. Configure host gateway to the birdge
+5. Configure host gateway to the bridge
 6. Configure client to access WIFI
 7. Create a static network interface on the client
 8. Passthrough network traffic on the client from the WIFI adapter to the static network interface.
@@ -23,7 +23,7 @@ https://www.davidschlachter.com/misc/t480-bhyve-wifi-pci-passthrough
 
 I will be using Alpine Linux as the client. The distribution is small and simple using busybox and will run in under 196MB of RAM, with one vcore.
 https://alpinelinux.org/downloads/
-NB. With a 64-bit host one will need to use a 64-bit client too. A 32-bit (x86) client fails to run on a x86-64 host. 
+NB. With a 64-bit host one will need to use a 64-bit client too. A 32-bit (x86) client fails to run on a x86-64 Bhyve host for some reason. 
 
 ## B. Configure Host
 
