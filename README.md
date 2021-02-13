@@ -13,7 +13,7 @@ The prescription for this setup is as follows:
 7. Create a static network interface on the client
 8. Passthrough network traffic on the client from the WIFI adapter to the static network interface.
 
-#A. Prerequisites
+# A. Prerequisites
 
 References:
 
@@ -24,7 +24,7 @@ I will be using Alpine Linux as the client. The distribution is small and simple
 https://alpinelinux.org/downloads/
 NB. With a 64-bit host one will need to use a 64-bit client too. A 32-bit (x86) client fails to run on a x86-64 host. 
 
-#B. Configure Host
+# B. Configure Host
 
 We need grub2-byve:
 
@@ -108,7 +108,7 @@ tap0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> metric 0 mtu 15
 The host will have a local IP address of 172.24.1.49. The client will be on 172.24.1.1.
 
 
-#C. Configure Client
+# C. Configure Client
 
 We won't be using the vdisk for any installation as we'll be running the client from RAM. We will however use the vdisk for a
 persistant configuration. After booting and logging into the client the `run.sh` script prepares the client's configuration. The WIFI adapter
@@ -144,7 +144,7 @@ wlan0     Link encap:Ethernet  HWaddr F0:D5:BF:1B:E2:16
 The `nat.sh` forwards everything from `wlan0` to `eth0` and vice versa.
 
 
-#D. SSHing
+# D. SSHing
 
 It's possible to log into the client via ssh, but since the host is now on another network, we need to reverse tunnel ssh
 from the host by running `ssh -vfN -R 2210:localhost:22 192.168.0.21` on the host. The host will then be available on port 2210 on the client's network.
