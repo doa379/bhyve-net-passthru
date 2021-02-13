@@ -41,17 +41,17 @@ The pci address of the adapter on the host can be found using `sudo pciconf -lv`
 
 We then have to add the following entries to `/boot/loader.conf`:
 
-`
+```
 vmm_load="YES"
 nmdm_load="NO"
 if_bridge_load="YES"
 if_tap_load="YES"
 pptdevs="4/0/0"                 #Corresponding to PCI address of net adapter
-`
+```
 
 In order to configure networking we will set the following entries in `/etc/rc.conf`:
 
-`
+```
 #Disable any local networking
 #wpa_supplicant_enable="YES"
 #synchronous_dhclient="YES"
@@ -69,13 +69,13 @@ vm_dir="/mnt/vm_bhyve"
 cloned_interfaces="bridge0 tap0"
 ifconfig_bridge0="inet 172.24.1.49 netmask 255.255.255.0 addm tap0 up"
 defaultrouter="172.24.1.1"
-`
+```
 
 Also set in `/etc/sysctl.conf`: `net.link.tap.up_on_open=1`
 
 `ifconfig -a` thus shows the following configuration:
 
-`
+```
 em0: flags=8802<BROADCAST,SIMPLEX,MULTICAST> metric 0 mtu 1500
         options=81249b<RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,VLAN_HWCSUM,LRO,WOL_MAGIC,VLAN_HWFILTER>
         ether c8:5b:76:91:21:b4
@@ -107,7 +107,7 @@ tap0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> metric 0 mtu 15
         status: active
         nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
         Opened by PID 1660
-`
+```
 
 The host will have a local IP address of 172.24.1.49. The client will be on 172.24.1.1.
 
@@ -118,7 +118,7 @@ We won't be using the vdisk for any installation as we'll be running the client 
 persistant configuration. After booting and logging into the client the `run.sh` script prepares the client's configuration. The WIFI adapter
 appears as `wlan0` and the bridge/tap device as `eth0`.
 
-`
+```
 eth0      Link encap:Ethernet  HWaddr 00:A0:98:D2:16:22  
           inet addr:172.24.1.1  Bcast:0.0.0.0  Mask:255.255.255.0
           inet6 addr: fe80::2a0:98ff:fed2:1622/64 Scope:Link
@@ -145,7 +145,7 @@ wlan0     Link encap:Ethernet  HWaddr F0:D5:BF:1B:E2:16
           TX packets:247868138 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000 
           RX bytes:240023131195 (223.5 GiB)  TX bytes:64574345178 (60.1 GiB)
-`
+```
 
 The `nat.sh` forwards everything from `wlan0` to `eth0` and vice versa.
 
