@@ -13,7 +13,7 @@ The prescription for this setup is as follows:
 7. Create a static network interface on the client
 8. Passthrough network traffic on the client from the WIFI adapter to the static network interface.
 
-# A. Prerequisites
+## A. Prerequisites
 
 References:
 
@@ -24,7 +24,7 @@ I will be using Alpine Linux as the client. The distribution is small and simple
 https://alpinelinux.org/downloads/
 NB. With a 64-bit host one will need to use a 64-bit client too. A 32-bit (x86) client fails to run on a x86-64 host. 
 
-# B. Configure Host
+## B. Configure Host
 
 We need grub2-byve:
 
@@ -48,7 +48,9 @@ if_bridge_load="YES"
 if_tap_load="YES"
 pptdevs="4/0/0"                 #Corresponding to PCI address of net adapter
 `
+
 In order to configure networking we will set the following entries in `/etc/rc.conf`:
+
 `
 #Disable any local networking
 #wpa_supplicant_enable="YES"
@@ -68,12 +70,13 @@ cloned_interfaces="bridge0 tap0"
 ifconfig_bridge0="inet 172.24.1.49 netmask 255.255.255.0 addm tap0 up"
 defaultrouter="172.24.1.1"
 `
-Also set in `/etc/sysctl.conf`:
-`net.link.tap.up_on_open=1`
+
+Also set in `/etc/sysctl.conf`: `net.link.tap.up_on_open=1`
 
 `ifconfig -a` thus shows the following configuration:
 
-`em0: flags=8802<BROADCAST,SIMPLEX,MULTICAST> metric 0 mtu 1500
+`
+em0: flags=8802<BROADCAST,SIMPLEX,MULTICAST> metric 0 mtu 1500
         options=81249b<RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,VLAN_HWCSUM,LRO,WOL_MAGIC,VLAN_HWFILTER>
         ether c8:5b:76:91:21:b4
         media: Ethernet autoselect
@@ -103,18 +106,20 @@ tap0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> metric 0 mtu 15
         media: Ethernet autoselect
         status: active
         nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
-        Opened by PID 1660`
+        Opened by PID 1660
+`
 
 The host will have a local IP address of 172.24.1.49. The client will be on 172.24.1.1.
 
 
-# C. Configure Client
+## C. Configure Client
 
 We won't be using the vdisk for any installation as we'll be running the client from RAM. We will however use the vdisk for a
 persistant configuration. After booting and logging into the client the `run.sh` script prepares the client's configuration. The WIFI adapter
 appears as `wlan0` and the bridge/tap device as `eth0`.
 
-`eth0      Link encap:Ethernet  HWaddr 00:A0:98:D2:16:22  
+`
+eth0      Link encap:Ethernet  HWaddr 00:A0:98:D2:16:22  
           inet addr:172.24.1.1  Bcast:0.0.0.0  Mask:255.255.255.0
           inet6 addr: fe80::2a0:98ff:fed2:1622/64 Scope:Link
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
@@ -139,12 +144,13 @@ wlan0     Link encap:Ethernet  HWaddr F0:D5:BF:1B:E2:16
           RX packets:364593421 errors:0 dropped:18466 overruns:0 frame:0
           TX packets:247868138 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000 
-          RX bytes:240023131195 (223.5 GiB)  TX bytes:64574345178 (60.1 GiB)`
+          RX bytes:240023131195 (223.5 GiB)  TX bytes:64574345178 (60.1 GiB)
+`
 
 The `nat.sh` forwards everything from `wlan0` to `eth0` and vice versa.
 
 
-# D. SSHing
+## D. SSHing
 
 It's possible to log into the client via ssh, but since the host is now on another network, we need to reverse tunnel ssh
 from the host by running `ssh -vfN -R 2210:localhost:22 192.168.0.21` on the host. The host will then be available on port 2210 on the client's network.
