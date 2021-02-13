@@ -153,6 +153,7 @@ The `nat.sh` forwards everything from `wlan0` to `eth0` and vice versa.
 
 ## D. SSHing
 
-It's possible to log into the client via ssh, but since the host is now on another network, we need to reverse tunnel ssh
-from the host by running `ssh -vfN -R 2210:localhost:22 192.168.0.21` on the host. The host will then be available on port 2210 on the client's network.
-We also need to make sure that `/etc/ssh/sshd_config` has this line enabled `AllowTcpForwarding yes`.
+It's possible to log into the client via ssh, but since the host is now on another network, we need to forward ssh connections.
+First we need to make sure that `/etc/ssh/sshd_config` has enabled `AllowTcpForwarding yes` on the host as well as on the client.
+Also set `GatewayPorts yes` on the client. Then on the host run `ssh -vfN -R 2210:localhost:22 192.168.0.21`. 
+The host will then be available on port 2210 on the client's network.
