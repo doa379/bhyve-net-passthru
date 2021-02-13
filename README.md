@@ -27,11 +27,11 @@ NB. With a 64-bit host one will need to use a 64-bit client too. A 32-bit (x86) 
 
 ## B. Configure Host
 
-We need grub2-byve:
+We need grub2-bhyve:
 
 `$ sudo pkg install grub2-bhyve`
 
-The client will be spawned using the vm_run script. The client will be killed using the vm_kill script. The file device map must contain the
+The client will be spawned using the `vm_run` script. The client will be killed using the `vm_kill` script. The file `device map` must contain the
 path and filename to the client iso. We simply boot the iso in RAM and won't be installing anything. 
 `-s 3,ahci-cd,/mnt/alpine-standard-3.13.0-x86_64.iso`
 There is one caveat however, that Bhyve still needs a vdisk image in order to boot (even though we won't be using it).
@@ -65,8 +65,8 @@ In order to configure networking we will set the following entries in `/etc/rc.c
 firewall_enable="NO"
 firewall_type="simple"
 
-vm_enable="NO"
-vm_dir="/mnt/vm_bhyve"
+#vm_enable="NO"                 # Setting for vm-bhyve management system
+#vm_dir="/mnt/vm_bhyve"         # Setting for vm-bhyve management system
 cloned_interfaces="bridge0 tap0"
 ifconfig_bridge0="inet 172.24.1.49 netmask 255.255.255.0 addm tap0 up"
 defaultrouter="172.24.1.1"
