@@ -1,0 +1,11 @@
+#! /bin/sh
+grub-bhyve -m device.map -r cd0 -M 196M -S linuxguest
+bhyve -AHPDHwS -c 1 -m 196M -l com1,stdio \
+-s 0,hostbridge \
+-s 1,lpc \
+-s 2,virtio-net,tap0 \
+-s 3,ahci-cd,/mnt/alpine-standard-3.13.0-x86_64.iso \
+-s 4,virtio-blk,/mnt/vm_bhyve/linuxguest/disk0.img \
+-s 5,passthru,4/0/0 \
+linuxguest
+./vm_kill
